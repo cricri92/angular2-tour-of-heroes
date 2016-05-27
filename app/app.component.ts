@@ -1,28 +1,19 @@
 import { Component } from '@angular/core';  
+import { HeroDetailComponent } from './hero-detail.component';
+import { Hero } from './hero';
 
-export class Hero {
-  id: number;
-  name: string;
-}
 
 @Component({   
   selector: 'my-app',  
   template: `
-            <div *ngIf="selectedHero">
-              <h2>Detalles del heroe {{selectedHero.name}}</h2>
-              <div><label>Nº </label>{{selectedHero.id}}</div>
-              <div>
-                  <label>Nombre: </label>
-                  <input [(ngModel)]="selectedHero.name" placeholder="name"/>
-              </div>
-            </div>
-             <h1>{{title}}</h1>             
+             <h1>{{title}}</h1> 
+             <my-hero-detail [hero]="selectedHero"></my-hero-detail>             
              <h2>Mis heroes<h2>
              <ul class="heroes">
                 <li *ngFor="let hero of heroes" (click)="onSelect(hero)" [class.selected]="hero === selectedHero">
                     <span class="badge">{{hero.id}}</span> {{hero.name}}
                 </li>
-             </ul>            
+             </ul>                        
              `,
     styles:[`
             .selected {
@@ -72,7 +63,8 @@ export class Hero {
                 margin-right: .8em;
                 border-radius: 4px 0 0 4px;
             }
-          `]
+          `],
+          directives: [HeroDetailComponent]
 
 })
 
@@ -82,7 +74,7 @@ export class AppComponent
   title = "Tour de héroes";
   public heroes = HEROES;  
   selectedHero: Hero;
-  
+  /** Permite mostrar el detalle de un heroe */
   onSelect(hero: Hero) { this.selectedHero = hero; }
  } 
  
@@ -90,7 +82,7 @@ export class AppComponent
 var HEROES: Hero[] = [
     {"id":11, "name":"Alice"},
     {"id":12, "name":"Ashe"},
-    {"id":13, "name":"Raze"},
+    {"id":13, "name":"Ryze"},
     {"id":14, "name":"Attor"},
     {"id":15, "name":"Garen"},
     {"id":16, "name":"Vi"},
