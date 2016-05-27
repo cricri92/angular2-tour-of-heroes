@@ -7,10 +7,19 @@ export class Hero {
 
 @Component({   
   selector: 'my-app',  
-  template: `<h1>{{title}}</h1>             
+  template: `
+            <div *ngIf="selectedHero">
+              <h2>Detalles del heroe {{selectedHero.name}}</h2>
+              <div><label>Nº </label>{{selectedHero.id}}</div>
+              <div>
+                  <label>Nombre: </label>
+                  <input [(ngModel)]="selectedHero.name" placeholder="name"/>
+              </div>
+            </div>
+             <h1>{{title}}</h1>             
              <h2>Mis heroes<h2>
              <ul class="heroes">
-                <li *ngFor="let hero of heroes" (click)="onSelect(hero)">
+                <li *ngFor="let hero of heroes" (click)="onSelect(hero)" [class.selected]="hero === selectedHero">
                     <span class="badge">{{hero.id}}</span> {{hero.name}}
                 </li>
              </ul>            
@@ -72,7 +81,9 @@ export class AppComponent
 {  
   title = "Tour de héroes";
   public heroes = HEROES;  
-  //hero: Hero = { id: 1, name: "IceStringStorm"};
+  selectedHero: Hero;
+  
+  onSelect(hero: Hero) { this.selectedHero = hero; }
  } 
  
 /** Lista de heroes */
