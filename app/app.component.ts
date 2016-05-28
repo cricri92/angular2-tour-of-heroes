@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';  
+import { Component } from '@angular/core'; 
+import { OnInit } from '@angular/core'; 
+
 import { HeroDetailComponent } from './hero-detail.component';
 import { Hero } from './hero';
-
+import { HeroService } from './hero.service';
+import { HEROES } from './mock-heroes';
 
 @Component({   
   selector: 'my-app',  
@@ -64,30 +67,30 @@ import { Hero } from './hero';
                 border-radius: 4px 0 0 4px;
             }
           `],
-          directives: [HeroDetailComponent]
+          directives: [HeroDetailComponent],
+          providers: [HeroService]
 
 })
 
 /** AppComponent clase principal */
-export class AppComponent 
+export class AppComponent implements OnInit 
 {  
-  title = "Tour de héroes";
-  public heroes = HEROES;  
-  selectedHero: Hero;
-  /** Permite mostrar el detalle de un heroe */
-  onSelect(hero: Hero) { this.selectedHero = hero; }
+    ngOnInit() {
+        this.getHeroes();
+    }
+    title = "Tour de héroes";
+    //heroes = Hero[];  
+    selectedHero: Hero;
+    heroes: Hero[];
+  
+    /** Constructor para el servicio */
+    constructor(private heroService: HeroService) { }
+    /** Permite mostrar el detalle de un heroe */
+    onSelect(hero: Hero) { this.selectedHero = hero; }
+    getHeroes() {
+        this.heroService.getHeroes()
+            .then(heroes => this.heroes = heroes);
+    }
  } 
  
-/** Lista de heroes */
-var HEROES: Hero[] = [
-    {"id":11, "name":"Alice"},
-    {"id":12, "name":"Ashe"},
-    {"id":13, "name":"Ryze"},
-    {"id":14, "name":"Attor"},
-    {"id":15, "name":"Garen"},
-    {"id":16, "name":"Vi"},
-    {"id":17, "name":"Tristana"},
-    {"id":18, "name":"Flesh"},
-    {"id":19, "name":"Yasuo"},
-    {"id":20, "name":"JorEl"}
-  ];
+ 
