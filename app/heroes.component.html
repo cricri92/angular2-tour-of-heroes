@@ -1,3 +1,9 @@
+<button (click)="addHero()">Crear heroe</button>
+
+<div *ngIf="addingHero">
+  <my-hero-detail (close)="close($event)"></my-hero-detail>
+</div>
+
 <div *ngIf="selectedHero">
     <h2>
         {{selectedHero.name | uppercase}} is my hero
@@ -5,10 +11,15 @@
     <button
         (click)="gotoDetail()"> Ver detalles
     </button>
-</div>            
+</div>    
+        
 <h2>Mis heroes<h2>
 <ul class="heroes">
-<li *ngFor="let hero of heroes" (click)="onSelect(hero)" [class.selected]="hero === selectedHero">
-    <span class="badge">{{hero.id}}</span> {{hero.name}}
-</li>
+    <li *ngFor="let hero of heroes" (click)="onSelect(hero)" [class.selected]="hero === selectedHero">
+        <span class="badge">{{hero.id}}</span> {{hero.name}}
+        <button class="delete-button" (click)="delete(hero, $event)">Eliminar</button>
+    </li>
 </ul>  
+
+
+

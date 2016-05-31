@@ -1,10 +1,16 @@
 "use strict";
-// Importamos el lanzador de la aplicacion. Como no queremos que este pegada a un unico ambiente de ejecucion, sino que este abierto a cualquiera,
-// Con platform-browser-dynamic le damos esta facilidad al lanzador.
+// Imports for loading & configuring the in-memory web api
+var core_1 = require('@angular/core');
+var http_1 = require('@angular/http');
+var angular2_in_memory_web_api_1 = require('angular2-in-memory-web-api');
+var in_memory_data_service_1 = require('./in-memory-data.service');
+// The usual bootstrapping imports
 var platform_browser_dynamic_1 = require('@angular/platform-browser-dynamic');
-// Importacion del componente. Como es uno solo que se tiene aca, el import esta dado una sola vez.
-// from './app.component' indica que vendra del fichero app.component.ts (la extension no es requerida)
+var http_2 = require('@angular/http');
 var app_component_1 = require('./app.component');
-// Lanzamiento de la aplicacion usando el web component AppComponent.
-platform_browser_dynamic_1.bootstrap(app_component_1.AppComponent);
+platform_browser_dynamic_1.bootstrap(app_component_1.AppComponent, [
+    http_2.HTTP_PROVIDERS,
+    core_1.provide(http_1.XHRBackend, { useClass: angular2_in_memory_web_api_1.InMemoryBackendService }),
+    core_1.provide(angular2_in_memory_web_api_1.SEED_DATA, { useClass: in_memory_data_service_1.InMemoryDataService }) // in-mem server data
+]);
 //# sourceMappingURL=main.js.map
